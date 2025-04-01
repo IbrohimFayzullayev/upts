@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 
 const LoginScreen: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useContext(AuthenticationContext);
   const [error, setError] = useState<{ username?: string; password?: string }>(
     {}
   );
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     let errors: { username?: string; password?: string } = {};
 
@@ -22,7 +24,8 @@ const LoginScreen: React.FC = () => {
     setError(errors);
 
     if (Object.keys(errors).length === 0) {
-      alert("Login successful!"); // Replace with actual authentication logic
+      await login(username, password);
+      // alert("Login successful!"); // Replace with actual authentication logic
     }
   };
 

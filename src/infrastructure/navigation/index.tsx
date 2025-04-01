@@ -7,8 +7,8 @@ const Navigation = () => {
   return (
     <Routes>
       <Route path="/login" element={<LoginScreen />} />
-      <Route path="/" element={<DashboardScreen />} />
       <Route path="/priority" element={<PriorityScreen />} />
+      <Route path="/" element={<DashboardScreen />} />
     </Routes>
   );
 };

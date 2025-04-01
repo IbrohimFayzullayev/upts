@@ -35,7 +35,7 @@ const ResultsTable = () => {
                 </td>
                 <td>
                   <button
-                    className="btn btn-primary btn-sm view-priorities"
+                    className="btn btn-primary btn-sm view-priorities me-2 mb-2"
                     data-user-id="83"
                   >
                     Batafsil

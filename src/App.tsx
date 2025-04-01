@@ -1,11 +1,15 @@
 import { BrowserRouter } from "react-router-dom";
 import Navigation from "./infrastructure/navigation";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { AuthenticationProvider } from "./services/authentication/authentication.context";
+// import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <BrowserRouter>
-      <Navigation />
+      {/* <Toaster position="top-right" reverseOrder={false} /> */}
+      <AuthenticationProvider>
+        <Navigation />
+      </AuthenticationProvider>
     </BrowserRouter>
   );
 }

@@ -4,7 +4,7 @@ import "../styles/dashboard.styles.css";
 
 const DashboardScreen = () => {
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" style={{ minHeight: "100vh" }}>
       <div className="row">
         <div className="col-12">
           <h1 className="text-center my-4">Natijalar Dashboard</h1>
