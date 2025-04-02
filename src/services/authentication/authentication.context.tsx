@@ -32,7 +32,7 @@ export const AuthenticationProvider = ({
     const token = Cookies.get("UptsToken");
     if (token) {
       try {
-        authAxios.defaults.headers.Authorization = `${token}`;
+        authAxios.defaults.headers.Authorization = `token ${token}`;
         authAxios.get("/profile/me").then((res) => {
           setUser(res.data);
           setIsAuthenticated(true);

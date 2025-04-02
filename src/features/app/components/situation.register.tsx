@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-
-type Props = {
+import React, { FC, useState } from "react";
+type SituationRegisterProps = {
   handleRegister: (fullName: string, phone: string) => void;
 };
-const PriorityRegister: React.FC<Props> = ({ handleRegister }) => {
+const SituationRegister: FC<SituationRegisterProps> = ({ handleRegister }) => {
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [errors, setErrors] = useState<{ fullName?: string; phone?: string }>(
@@ -23,14 +22,15 @@ const PriorityRegister: React.FC<Props> = ({ handleRegister }) => {
     console.log("Form submitted:", { fullName, phone });
     if (validateForm()) {
       console.log("Form is valid. Proceeding with registration...");
+      // Here you can handle the form submission, e.g., send data to an API
       handleRegister(fullName, phone);
     }
   };
 
   return (
-    <div id="registrationForm" className="form-section">
+    <div id="registrationForm" className="form-section situation-register">
       <form className="form-header" onSubmit={handleSubmit}>
-        <h2>Информация о вас</h2>
+        <h2>Регистрация</h2>
         <div className="form-group">
           <label htmlFor="fullName">ФИО</label>
           <input
@@ -47,7 +47,7 @@ const PriorityRegister: React.FC<Props> = ({ handleRegister }) => {
           )}
         </div>
         <div className="form-group">
-          <label htmlFor="phone">Телефон</label>
+          <label htmlFor="phone">Номер телефона</label>
           <input
             type="tel"
             id="phone"
@@ -62,8 +62,8 @@ const PriorityRegister: React.FC<Props> = ({ handleRegister }) => {
           )}
         </div>
         <div className="submit-container">
-          <button type="submit" className="submit-button">
-            <span>Начать</span>
+          <button type="submit" className="btn btn-primary submit-button">
+            <span>Начать тест</span>
           </button>
         </div>
       </form>
@@ -71,4 +71,4 @@ const PriorityRegister: React.FC<Props> = ({ handleRegister }) => {
   );
 };
 
-export default PriorityRegister;
+export default SituationRegister;
