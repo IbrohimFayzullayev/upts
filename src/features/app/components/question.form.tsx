@@ -61,34 +61,42 @@ type Props = {
 };
 const QuestionForm: FC<Props> = ({ vacancyId }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedOption, setSelectedOption] = useState<number | null>(null);
-  const [initialQuestion, setInitialQuestion] = useState<QuestionProps | null>(
-    null
-  );
+  const [selectedOption, setSelectedOption] =
+    useState<QuestionChoiceProps | null>(null);
+  const [question, setQuestion] = useState<QuestionProps | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         await Axios.get<{ result: QuestionProps }>(
           `/test/question/initial-question/?vacancy_id=${vacancyId}`
-        ).then((res) => {
-          setInitialQuestion(res.data.result);
-          console.log(res.data.result);
-        });
+        ).then((res) => setQuestion(res.data.result));
       } catch (error) {}
     };
     fetchData();
   }, []);
 
-  const handleNext = () => {
-    if (selectedOption !== null) {
-      if (currentQuestion < questions.length - 1) {
-        setCurrentQuestion(currentQuestion + 1);
-        setSelectedOption(null); // Reset selection for next question
-      } else {
-        alert("Test completed!");
-      }
+  const handleNext = async () => {
+    if (selectedOption === null) {
+      alert("Iltimos, javobni tanlang.");
+      return;
     }
+
+    await Axios.get<{ result: QuestionProps }>(
+      `/test/question/${selectedOption.next_question}/?vacancy_id=${vacancyId}`
+    ).then((res) => {
+      console.log(res.data);
+      setQuestion(res.data.result);
+    });
+
+    // if (selectedOption !== null) {
+    //   if (currentQuestion < questions.length - 1) {
+    //     setCurrentQuestion(currentQuestion + 1);
+    //     setSelectedOption(null); // Reset selection for next question
+    //   } else {
+    //     alert("Test completed!");
+    //   }
+    // }
   };
   return (
     <div className="task-container">
@@ -105,19 +113,19 @@ const QuestionForm: FC<Props> = ({ vacancyId }) => {
         Boshlang'ich vaziyat (Уровень 1 из 6)
       </div>
       <div className="situation-title h4 mb-3" id="situationTitle">
-        Vaziyat: {initialQuestion?.text}
+        Vaziyat: {question?.text}
       </div>
       <div className="situation-text mb-4" id="situationText">
-        {initialQuestion?.text}
+        {question?.text}
       </div>
       <div className="options-container" id="optionsContainer">
-        {initialQuestion?.choices.map((option, index) => (
+        {question?.choices.map((option, index) => (
           <div
             key={index}
             className={`option ${
-              selectedOption === option.id ? "selected" : ""
+              selectedOption?.id === option.id ? "selected" : ""
             }`}
-            onClick={() => setSelectedOption(option.id)}
+            onClick={() => setSelectedOption(option)}
           >
             <div className="option-title">{option.text}</div>
             {/* <div className="option-description">{option.description}</div> */}
