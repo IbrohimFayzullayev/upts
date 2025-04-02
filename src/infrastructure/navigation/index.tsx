@@ -8,7 +8,8 @@ const Navigation = () => {
   return (
     <Routes>
       <Route path="/login" element={<LoginScreen />} />
-      <Route path="/priority" element={<PriorityScreen />} />
+      {/* <Route path="/priority" element={<PriorityScreen />} /> */}
+      <Route path="/priority/:id" element={<PriorityScreen />} />
       <Route path="/situation" element={<SituationScreen />} />
       <Route path="/" element={<DashboardScreen />} />
     </Routes>
