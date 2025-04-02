@@ -1,66 +1,12 @@
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Axios } from "../../../utils/axios";
-
-interface Question {
-  id: number;
-  text: string;
-  situation: string;
-  options: {
-    title: string;
-    description: string;
-  }[];
-}
-
-const questions: Question[] = [
-  {
-    id: 1,
-    situation: "Avtobusga kech qolish",
-    text: "Siz uyda chiqib, ishga ulgurish uchun avtobus bekatiga yo'l oldingiz. Biroq, yetib kelganingizda, avtobus ketib qoldi. Siz ishga kech qolayapsiz. Bu vaziyatning sababi nima bo'lishi mumkin?",
-    options: [
-      {
-        title: "Uydan kech chiqqanim sababli",
-        description:
-          "Tayyorgarlik uchun ko'proq vaqt ketgani yoki ijtimoiy tarmoqlarga chalg'iganingiz sababli",
-      },
-      {
-        title: "Uxlab qolganim sababli",
-        description:
-          "Uxlashga kech yotganligingiz yoki budilnik ishlamay qolgani uchun",
-      },
-      {
-        title: "Uyga qaytishga to'g'ri kelgani sababli",
-        description: "Kerakli narsa uyda qolib ketganligi uchun",
-      },
-      {
-        title: "Vaqtni xato rejalashtirganim sababli",
-        description: "Uydan bekatgacha vaqtni xato hisoblaganim uchun",
-      },
-      {
-        title: "Yo'lda to'xtab qolganim sababli",
-        description:
-          "Do'konga yoki kofe olish uchun to'xtab, o'ylaganimdan ko'p vaqt ketgani uchun",
-      },
-      {
-        title: "Avtobus odatdagi vaqtdan oldin kelgani sababli",
-        description: "Avtobus grafigi bo'yicha yurmagani uchun",
-      },
-      {
-        title: "Avtobus bekatda to'xtamagani sababli",
-        description: "Qandaydir xato yoki noaniqlik tufayli",
-      },
-      {
-        title: "Soatdagi xatolik sababli",
-        description: "Soat yoki telefondagi vaqt xato ko'rsatilganligi uchun",
-      },
-    ],
-  },
-];
+import Swal from "sweetalert2";
 
 type Props = {
   vacancyId: string | undefined;
+  handleComplete: () => void;
 };
-const QuestionForm: FC<Props> = ({ vacancyId }) => {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+const QuestionForm: FC<Props> = ({ vacancyId, handleComplete }) => {
   const [selectedOption, setSelectedOption] =
     useState<QuestionChoiceProps | null>(null);
   const [question, setQuestion] = useState<QuestionProps | null>(null);
@@ -78,7 +24,20 @@ const QuestionForm: FC<Props> = ({ vacancyId }) => {
 
   const handleNext = async () => {
     if (selectedOption === null) {
-      alert("Iltimos, javobni tanlang.");
+      Swal.fire({
+        icon: "error",
+        title: "Xato",
+        text: "Iltimos, javobni tanlang!",
+      });
+      return;
+    }
+    if (selectedOption.next_question === null) {
+      // Swal.fire({
+      //   icon: "success",
+      //   title: "Muvaffaqiyatli",
+      //   text: "Test tugadi!",
+      // });
+      handleComplete();
       return;
     }
 

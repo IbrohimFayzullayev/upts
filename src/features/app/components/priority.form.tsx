@@ -26,6 +26,8 @@ const PriorityForm: React.FC<Props> = ({ vacancyId, setIsPriority }) => {
     fetchData();
   }, []);
 
+  const handleSubmit = () => setIsPriority(false);
+
   return (
     <form id="priorityForm">
       <h2>Siz uchun ishda nima muhim</h2>
@@ -35,7 +37,7 @@ const PriorityForm: React.FC<Props> = ({ vacancyId, setIsPriority }) => {
         darajasida shunday qiling.
       </p>
       <PrList
-        setIsPriority={setIsPriority}
+        handleSubmit={handleSubmit}
         priorityItems={priorityItems}
         setPriorityItems={setPriorityItems}
       />

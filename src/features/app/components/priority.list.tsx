@@ -8,12 +8,12 @@ type Item = {
 type Props = {
   priorityItems: Item[];
   setPriorityItems: React.Dispatch<React.SetStateAction<Item[]>>;
-  setIsPriority: React.Dispatch<React.SetStateAction<boolean>>;
+  handleSubmit: () => void;
 };
 const PriorityList: React.FC<Props> = ({
   priorityItems,
   setPriorityItems,
-  setIsPriority,
+  handleSubmit,
 }) => {
   const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
 
@@ -45,17 +45,12 @@ const PriorityList: React.FC<Props> = ({
     setPriorityItems(updatedItems);
   };
 
-  const handleSubmit = () => {
-    // alert("Submitting: " + JSON.stringify(priorityItems));
-    setIsPriority(false);
-  };
-
   return (
     <div className="priority-list" id="priorityList">
       {priorityItems.map((item, index) => (
         <div
           className="priority-item-container"
-          key={item.id} // `index` o'rniga `id` ishlatildi
+          key={item.id}
           draggable
           onDragStart={() => handleDragStart(index)}
           onDragOver={() => handleDragOver(index)}

@@ -1,11 +1,14 @@
 import React, { useState } from "react";
+import { Axios } from "../../../utils/axios";
 
 type Props = {
   handleRegister: (fullName: string, phone: string) => void;
+  vacancy: VacancyProps | null;
 };
-const PriorityRegister: React.FC<Props> = ({ handleRegister }) => {
+const PriorityRegister: React.FC<Props> = ({ handleRegister, vacancy }) => {
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
+  const [lang, setLang] = useState("ru");
   const [errors, setErrors] = useState<{ fullName?: string; phone?: string }>(
     {}
   );
@@ -22,6 +25,7 @@ const PriorityRegister: React.FC<Props> = ({ handleRegister }) => {
     e.preventDefault();
     console.log("Form submitted:", { fullName, phone });
     if (validateForm()) {
+      Axios.defaults.headers.common["Accept-Language"] = lang;
       console.log("Form is valid. Proceeding with registration...");
       handleRegister(fullName, phone);
     }
@@ -30,7 +34,37 @@ const PriorityRegister: React.FC<Props> = ({ handleRegister }) => {
   return (
     <div id="registrationForm" className="form-section">
       <form className="form-header" onSubmit={handleSubmit}>
-        <h2>Информация о вас</h2>
+        {/* <h2>Информация о вас</h2> */}
+        <h3>Компания: {vacancy?.company}</h3>
+        <h3>Вакансия: {vacancy?.name}</h3>
+        <p>Заполните форму, чтобы зарегистрироваться на тестовое задание</p>
+        <div className="form-group">
+          <div className="form-group"></div>
+          <label htmlFor="language">
+            Выберите язык для теста: {lang === "ru" ? "Русский" : "O'zbekcha"}
+          </label>
+          <div
+            className="btn-group"
+            role="group"
+            id="language"
+            style={{ width: "100%" }}
+          >
+            <button
+              type="button"
+              className={`btn btn-${lang === "ru" ? "primary" : "secondary"}`}
+              onClick={() => setLang("ru")}
+            >
+              Русский
+            </button>
+            <button
+              onClick={() => setLang("uz")}
+              type="button"
+              className={`btn btn-${lang === "uz" ? "primary" : "secondary"}`}
+            >
+              O'zbekcha
+            </button>
+          </div>
+        </div>
         <div className="form-group">
           <label htmlFor="fullName">ФИО</label>
           <input
