@@ -5,38 +5,16 @@ type Item = {
   name: string;
 };
 
-const defaultStatements: Item[] = [
-  { id: 1, name: "Rasmiy ishga olish" },
-  { id: 2, name: "Yaxshi oylik" },
-  { id: 3, name: "Rasmiy otpusk" },
-  { id: 4, name: "Bepul obed" },
-  { id: 5, name: "Qulay ish joyi va kompyuter" },
-  { id: 6, name: "Dushanbadan Jumagacha 9.00-18.00 ish vaqti" },
-  { id: 7, name: "Ish vaqtidan tashqari ish qilmaslik" },
-  { id: 8, name: "Bayramlarga sovg'a" },
-  { id: 9, name: "Korporativlar va bayram tashkillashtirilishi" },
-  { id: 10, name: "Ofisning qulay joylashishi" },
-  { id: 11, name: "Ishda mentor bolishi (tajribali ishchi)" },
-  { id: 12, name: "Yaxshi rahbar" },
-  { id: 13, name: "Lavozim oshish imkoni" },
-  { id: 14, name: "Yaxshi jamoa" },
-  { id: 15, name: "KPI ga biriktirilgan bonus" },
-  { id: 16, name: "Uzoq muddat davomida ishlash uchun garantiya" },
-  { id: 17, name: "Ishda qiziq topshiriqlar bajarish imkoni" },
-  { id: 18, name: "Kompaniya imidji" },
-  { id: 19, name: "Kompaniya hisobidan o'qish va o'rganish" },
-  { id: 20, name: "Belgilanmagan ish vaqti(свободный график)" },
-  { id: 21, name: "Ishni bajarishda va qaror qabul qilishda erkinlik" },
-  { id: 22, name: "Katta barqaror kompaniyada ishlash" },
-  { id: 23, name: "Ish haqini o'z vaqtida to'lanishi" },
-];
-
 type Props = {
   priorityItems: Item[];
   setPriorityItems: React.Dispatch<React.SetStateAction<Item[]>>;
+  setIsPriority: React.Dispatch<React.SetStateAction<boolean>>;
 };
-const PriorityList: React.FC<Props> = ({ priorityItems, setPriorityItems }) => {
-  // const [priorityItems, setPriorityItems] = useState<Item[]>(defaultStatements);
+const PriorityList: React.FC<Props> = ({
+  priorityItems,
+  setPriorityItems,
+  setIsPriority,
+}) => {
   const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
 
   const handleDragStart = (index: number) => {
@@ -68,8 +46,8 @@ const PriorityList: React.FC<Props> = ({ priorityItems, setPriorityItems }) => {
   };
 
   const handleSubmit = () => {
-    alert("Submitting: " + JSON.stringify(priorityItems));
-    // Ma'lumotlarni serverga jo'natish joyi
+    // alert("Submitting: " + JSON.stringify(priorityItems));
+    setIsPriority(false);
   };
 
   return (

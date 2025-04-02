@@ -7,14 +7,19 @@ type Item = {
   name: string;
 };
 
-const PriorityForm: React.FC = () => {
+type Props = {
+  vacancyId: string | undefined;
+  setIsPriority: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const PriorityForm: React.FC<Props> = ({ vacancyId, setIsPriority }) => {
   const [priorityItems, setPriorityItems] = useState<Item[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         await Axios.get<{ result: Item[] }>(
-          `/test/motivation/?vacancy_id=f92790d7-be60-4484-ac06-9c61f4def7b3`
+          `/test/motivation/?vacancy_id=${vacancyId}`
         ).then((res) => setPriorityItems(res.data.result));
       } catch (error) {}
     };
@@ -30,6 +35,7 @@ const PriorityForm: React.FC = () => {
         darajasida shunday qiling.
       </p>
       <PrList
+        setIsPriority={setIsPriority}
         priorityItems={priorityItems}
         setPriorityItems={setPriorityItems}
       />

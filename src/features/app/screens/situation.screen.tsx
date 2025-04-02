@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import SituationForm from "../components/situation.form";
-import SituationRegister from "../components/situation.register";
+// import SituationForm from "../components/question.form";
+// import SituationRegister from "../components/situation.register";
 import "../styles/situation.styles.css";
 
 const SituationScreen = () => {
@@ -18,11 +18,11 @@ const SituationScreen = () => {
   return (
     <div className="situation-screen">
       <div className="pr-container">
-        {!isRegistered ? (
+        {/* {!isRegistered ? (
           <SituationForm />
         ) : (
           <SituationRegister handleRegister={handleRegister} />
-        )}
+        )} */}
       </div>
     </div>
   );

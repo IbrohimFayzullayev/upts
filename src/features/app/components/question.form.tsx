@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { FC, useEffect, useState } from "react";
+import { Axios } from "../../../utils/axios";
 
 interface Question {
   id: number;
@@ -55,9 +56,29 @@ const questions: Question[] = [
   },
 ];
 
-const SituationForm = () => {
+type Props = {
+  vacancyId: string | undefined;
+};
+const QuestionForm: FC<Props> = ({ vacancyId }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [initialQuestion, setInitialQuestion] = useState<QuestionProps | null>(
+    null
+  );
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await Axios.get<{ result: QuestionProps }>(
+          `/test/question/initial-question/?vacancy_id=${vacancyId}`
+        ).then((res) => {
+          setInitialQuestion(res.data.result);
+          console.log(res.data.result);
+        });
+      } catch (error) {}
+    };
+    fetchData();
+  }, []);
 
   const handleNext = () => {
     if (selectedOption !== null) {
@@ -81,25 +102,25 @@ const SituationForm = () => {
         <div className="level-dot "></div>
       </div>
       <div className="level-label" id="levelLabel">
-        Boshlang'ich vaziyat (Уровень {currentQuestion + 1} из 6)
+        Boshlang'ich vaziyat (Уровень 1 из 6)
       </div>
       <div className="situation-title h4 mb-3" id="situationTitle">
-        Vaziyat: {questions[currentQuestion].situation}
+        Vaziyat: {initialQuestion?.text}
       </div>
       <div className="situation-text mb-4" id="situationText">
-        {questions[currentQuestion].text}
+        {initialQuestion?.text}
       </div>
       <div className="options-container" id="optionsContainer">
-        {questions[currentQuestion].options.map((option, index) => (
+        {initialQuestion?.choices.map((option, index) => (
           <div
             key={index}
             className={`option ${
-              selectedOption === option.title ? "selected" : ""
+              selectedOption === option.id ? "selected" : ""
             }`}
-            onClick={() => setSelectedOption(option.title)}
+            onClick={() => setSelectedOption(option.id)}
           >
-            <div className="option-title">{option.title}</div>
-            <div className="option-description">{option.description}</div>
+            <div className="option-title">{option.text}</div>
+            {/* <div className="option-description">{option.description}</div> */}
           </div>
         ))}
       </div>
@@ -112,4 +133,4 @@ const SituationForm = () => {
   );
 };
 
-export default SituationForm;
+export default QuestionForm;
