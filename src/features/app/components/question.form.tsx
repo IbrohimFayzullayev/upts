@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { Axios } from "../../../utils/axios";
 import Swal from "sweetalert2";
+import "../styles/situation.styles.css";
 
 type Props = {
   vacancyId: string | undefined;

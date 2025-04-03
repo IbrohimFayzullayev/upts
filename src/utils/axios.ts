@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosCredentials = {
-  baseURL: "http://188.166.236.68/api",
+  baseURL: "https://upts.uz/api",
   headers: {
     Accept: "application/json",
   },
