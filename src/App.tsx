@@ -7,7 +7,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   return (
     <BrowserRouter>
-      {/* <Toaster position="top-right" reverseOrder={false} /> */}
       <AuthenticationProvider>
         <Navigation />
       </AuthenticationProvider>

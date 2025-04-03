@@ -1,8 +1,20 @@
+import { useEffect } from "react";
 import PriorityStatistics from "../components/priority.statistics";
 import ResultsTable from "../components/results.table";
 import "../styles/dashboard.styles.css";
+import { authAxios } from "../../../utils/axios";
 
 const DashboardScreen = () => {
+  useEffect(() => {
+    const fetchAttributes = async () => {
+      try {
+        await authAxios.get(`/test/vacancy/attributes/`).then((res) => {
+          // console.log(res.data);
+        });
+      } catch (error) {}
+    };
+    fetchAttributes();
+  }, []);
   return (
     <div className="container-fluid" style={{ minHeight: "100vh" }}>
       <div className="row">

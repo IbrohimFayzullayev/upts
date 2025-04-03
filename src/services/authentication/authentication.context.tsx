@@ -1,17 +1,14 @@
 import Cookies from "js-cookie";
-import {
-  createContext,
-  useState,
-  ReactNode,
-  useEffect,
-  SetStateAction,
-  Dispatch,
-} from "react";
+import { createContext, useState, ReactNode, useEffect } from "react";
 import { authAxios, Axios } from "../../utils/axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 type AuthenticationContextType = {
   login: (username: string, password: string) => Promise<void>;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  user: any;
 };
 
 export const AuthenticationContext = createContext(
@@ -23,10 +20,12 @@ export const AuthenticationProvider = ({
 }: {
   children: ReactNode;
 }) => {
+  const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
+  // const naviate = useNavigate();
 
   useEffect(() => {
     const token = Cookies.get("UptsToken");
@@ -35,14 +34,21 @@ export const AuthenticationProvider = ({
         authAxios.defaults.headers.Authorization = `token ${token}`;
         authAxios.get("/profile/me").then((res) => {
           setUser(res.data);
-          setIsAuthenticated(true);
         });
+        setIsAuthenticated(true);
+        setIsLoading(false);
       } catch (error: any) {
         console.error(error);
-        toast.error(`Failed to fetch user data: ${error.res.data.error}`);
+        setUser(null);
+        setIsLoading(false);
+        setIsAuthenticated(false);
+        // toast.error(`Failed to fetch user data: ${error.res.data.error}`);
       }
     } else {
+      setUser(null);
+      setIsLoading(false);
       setIsAuthenticated(false);
+      // toast.error("You are not logged in. Please log in to continue.");
     }
   }, []);
 
@@ -53,23 +59,27 @@ export const AuthenticationProvider = ({
         password,
       }).then((res) => {
         Cookies.set("UptsToken", res.data.token, { expires: 365 });
-        authAxios.defaults.headers.Authorization = `${res.data.token}`;
-        // authAxios.get("/profile/me").then((res) => {
-        //   setUser(res.data);
-        //   setIsAuthenticated(true);
-        // });
+        authAxios.defaults.headers.Authorization = `token ${res.data.token}`;
+        authAxios.get("/profile/me").then((res) => {
+          setUser(res.data);
+          setIsAuthenticated(true);
+          setIsLoading(false);
+        });
       });
-      toast.success("Login successful!");
+      navigate("/");
+      toast.success("Вы успешно вошли в систему!");
     } catch (error) {
       console.error(error);
-      toast.error("Login failed. Please check your credentials.");
+      toast.error("Неверный логин или пароль!");
     }
   };
 
   const onLogout = async () => {};
 
   return (
-    <AuthenticationContext.Provider value={{ login }}>
+    <AuthenticationContext.Provider
+      value={{ login, isAuthenticated, isLoading, user }}
+    >
       {children}
     </AuthenticationContext.Provider>
   );
