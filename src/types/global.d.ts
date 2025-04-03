@@ -22,3 +22,10 @@ interface QuestionChoiceProps {
   text: string;
   next_question: number | null;
 }
+
+interface IUser {
+  company_name: string;
+  id: number;
+  limit: number;
+  phone: string | null;
+}

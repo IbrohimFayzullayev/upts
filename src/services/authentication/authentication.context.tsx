@@ -8,7 +8,7 @@ type AuthenticationContextType = {
   login: (username: string, password: string) => Promise<void>;
   isAuthenticated: boolean;
   isLoading: boolean;
-  user: any;
+  user: IUser | null;
 };
 
 export const AuthenticationContext = createContext(
@@ -23,27 +23,29 @@ export const AuthenticationProvider = ({
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<IUser | null>(null);
   // const [error, setError] = useState(null);
   // const naviate = useNavigate();
+
+  const fetchUser = async () => {
+    try {
+      await authAxios.get<{ result: IUser }>(`/profile/me`).then((res) => {
+        setUser(res.data.result);
+        setIsAuthenticated(true);
+        setIsLoading(false);
+      });
+    } catch (error) {
+      setUser(null);
+      setIsLoading(false);
+      setIsAuthenticated(false);
+    }
+  };
 
   useEffect(() => {
     const token = Cookies.get("UptsToken");
     if (token) {
-      try {
-        authAxios.defaults.headers.Authorization = `token ${token}`;
-        authAxios.get("/profile/me").then((res) => {
-          setUser(res.data);
-        });
-        setIsAuthenticated(true);
-        setIsLoading(false);
-      } catch (error: any) {
-        console.error(error);
-        setUser(null);
-        setIsLoading(false);
-        setIsAuthenticated(false);
-        // toast.error(`Failed to fetch user data: ${error.res.data.error}`);
-      }
+      authAxios.defaults.headers.Authorization = `token ${token}`;
+      fetchUser();
     } else {
       setUser(null);
       setIsLoading(false);
@@ -60,12 +62,8 @@ export const AuthenticationProvider = ({
       }).then((res) => {
         Cookies.set("UptsToken", res.data.token, { expires: 365 });
         authAxios.defaults.headers.Authorization = `token ${res.data.token}`;
-        authAxios.get("/profile/me").then((res) => {
-          setUser(res.data);
-          setIsAuthenticated(true);
-          setIsLoading(false);
-        });
       });
+      await fetchUser();
       navigate("/");
       toast.success("Вы успешно вошли в систему!");
     } catch (error) {
