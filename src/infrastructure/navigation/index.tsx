@@ -29,7 +29,7 @@ const Navigation = () => {
         path="/"
         element={
           <AuthWrapper>
-            <HomeScreen />
+            <DashboardScreen />
           </AuthWrapper>
         }
       />
