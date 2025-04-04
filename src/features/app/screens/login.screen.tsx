@@ -1,8 +1,10 @@
 import React, { useContext, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
+import { useTranslation } from "react-i18next";
 
 const LoginScreen: React.FC = () => {
+  const { t } = useTranslation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useContext(AuthenticationContext);
@@ -15,10 +17,10 @@ const LoginScreen: React.FC = () => {
     let errors: { username?: string; password?: string } = {};
 
     if (!username.trim()) {
-      errors.username = "Please enter a username.";
+      errors.username = t("error_username");
     }
     if (!password.trim()) {
-      errors.password = "Please enter a password.";
+      errors.password = t("error_password");
     }
 
     setError(errors);
@@ -35,11 +37,11 @@ const LoginScreen: React.FC = () => {
         className="login-container p-4 bg-white rounded shadow"
         style={{ width: "400px" }}
       >
-        <h3 className="text-center">Login</h3>
+        <h3 className="text-center">{t("login")}</h3>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="username" className="form-label">
-              Username
+              {t("username")}
             </label>
             <input
               type="text"
@@ -54,7 +56,7 @@ const LoginScreen: React.FC = () => {
           </div>
           <div className="mb-3">
             <label htmlFor="password" className="form-label">
-              Password
+              {t("password")}
             </label>
             <input
               type="password"
@@ -68,7 +70,7 @@ const LoginScreen: React.FC = () => {
             )}
           </div>
           <button type="submit" className="btn btn-primary w-100">
-            Login
+            {t("login")}
           </button>
         </form>
       </div>

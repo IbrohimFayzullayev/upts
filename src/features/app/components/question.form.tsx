@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { Axios } from "../../../utils/axios";
 import Swal from "sweetalert2";
 import "../styles/situation.styles.css";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   vacancyId: string | undefined;
@@ -10,6 +11,7 @@ type Props = {
 const QuestionForm: FC<Props> = ({ vacancyId, handleComplete }) => {
   const [selectedOption, setSelectedOption] =
     useState<QuestionChoiceProps | null>(null);
+  const { t } = useTranslation();
   const [question, setQuestion] = useState<QuestionProps | null>(null);
 
   useEffect(() => {
@@ -28,7 +30,7 @@ const QuestionForm: FC<Props> = ({ vacancyId, handleComplete }) => {
       Swal.fire({
         icon: "error",
         title: "Xato",
-        text: "Iltimos, javobni tanlang!",
+        text: t("please_select_answer"),
       });
       return;
     }
@@ -44,40 +46,28 @@ const QuestionForm: FC<Props> = ({ vacancyId, handleComplete }) => {
 
     await Axios.get<{ result: QuestionProps }>(
       `/test/question/${selectedOption.next_question}/?vacancy_id=${vacancyId}`
-    ).then((res) => {
-      console.log(res.data);
-      setQuestion(res.data.result);
-    });
-
-    // if (selectedOption !== null) {
-    //   if (currentQuestion < questions.length - 1) {
-    //     setCurrentQuestion(currentQuestion + 1);
-    //     setSelectedOption(null); // Reset selection for next question
-    //   } else {
-    //     alert("Test completed!");
-    //   }
-    // }
+    ).then((res) => setQuestion(res.data.result));
   };
   return (
     <div className="task-container">
-      <h2 className="mb-4">Ситуационный тест</h2>
-      <div className="progress-indicator" id="progressIndicator">
+      <h2 className="mb-4">{t("situation_test")}</h2>
+      {/* <div className="progress-indicator" id="progressIndicator">
         <div className="level-dot active"></div>
         <div className="level-dot "></div>
         <div className="level-dot "></div>
         <div className="level-dot "></div>
         <div className="level-dot "></div>
         <div className="level-dot "></div>
-      </div>
-      <div className="level-label" id="levelLabel">
+      </div> */}
+      {/* <div className="level-label" id="levelLabel">
         Boshlang'ich vaziyat (Уровень 1 из 6)
-      </div>
+      </div> */}
       <div className="situation-title h4 mb-3" id="situationTitle">
-        Vaziyat: {question?.text}
+        {t("condition")}: {question?.text}
       </div>
-      <div className="situation-text mb-4" id="situationText">
+      {/* <div className="situation-text mb-4" id="situationText">
         {question?.text}
-      </div>
+      </div> */}
       <div className="options-container" id="optionsContainer">
         {question?.choices.map((option, index) => (
           <div
@@ -94,7 +84,7 @@ const QuestionForm: FC<Props> = ({ vacancyId, handleComplete }) => {
       </div>
       <div className="submit-container">
         <button className="submit-btn" onClick={handleNext}>
-          Продолжить
+          {t("continue")}
         </button>
       </div>
     </div>

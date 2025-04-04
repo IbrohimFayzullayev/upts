@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PrList from "./priority.list";
 import { Axios } from "../../../utils/axios";
+import { useTranslation } from "react-i18next";
 
 type Item = {
   id: number;
@@ -14,6 +15,7 @@ type Props = {
 
 const PriorityForm: React.FC<Props> = ({ vacancyId, setIsPriority }) => {
   const [priorityItems, setPriorityItems] = useState<Item[]>([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,12 +32,8 @@ const PriorityForm: React.FC<Props> = ({ vacancyId, setIsPriority }) => {
 
   return (
     <form id="priorityForm">
-      <h2>Siz uchun ishda nima muhim</h2>
-      <p className="instructions">
-        Ishdagi faktorlarni muhimlik darajasida tartibga keltiring. Eng muhim
-        narsani ustiga bosing. U tepaga ko'tariladi. Qolganlarini ham muhimlik
-        darajasida shunday qiling.
-      </p>
+      <h2>{t("what_important")}</h2>
+      <p className="instructions">{t("priority_instructions")}</p>
       <PrList
         handleSubmit={handleSubmit}
         priorityItems={priorityItems}
