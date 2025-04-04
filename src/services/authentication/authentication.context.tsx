@@ -65,10 +65,10 @@ export const AuthenticationProvider = ({
       });
       await fetchUser();
       navigate("/");
-      toast.success("Вы успешно вошли в систему!");
+      // toast.success("Вы успешно вошли в систему!");
     } catch (error) {
       console.error(error);
-      toast.error("Неверный логин или пароль!");
+      // toast.error("Неверный логин или пароль!");
     }
   };
 

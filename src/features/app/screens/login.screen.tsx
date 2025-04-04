@@ -7,6 +7,7 @@ const LoginScreen: React.FC = () => {
   const { t } = useTranslation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const { login } = useContext(AuthenticationContext);
   const [error, setError] = useState<{ username?: string; password?: string }>(
     {}
@@ -22,12 +23,12 @@ const LoginScreen: React.FC = () => {
     if (!password.trim()) {
       errors.password = t("error_password");
     }
-
     setError(errors);
 
     if (Object.keys(errors).length === 0) {
+      setLoading(true);
       await login(username, password);
-      // alert("Login successful!"); // Replace with actual authentication logic
+      setLoading(false);
     }
   };
 
@@ -69,8 +70,20 @@ const LoginScreen: React.FC = () => {
               <div className="invalid-feedback">{error.password}</div>
             )}
           </div>
-          <button type="submit" className="btn btn-primary w-100">
-            {t("login")}
+          <button
+            type="submit"
+            className="btn btn-primary w-100"
+            disabled={loading}
+          >
+            {loading ? (
+              <span
+                className="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+            ) : (
+              t("login")
+            )}
           </button>
         </form>
       </div>
