@@ -5,8 +5,10 @@ import "../styles/priority.styles.css";
 import { useParams } from "react-router-dom";
 import { Axios } from "../../../utils/axios";
 import QuestionForm from "../components/question.form";
+import { useTranslation } from "react-i18next";
 
 const PriorityScreen = () => {
+  const { t } = useTranslation();
   const { id } = useParams();
   const [isRegistered, setIsRegistered] = useState(false);
   const [vacancy, setVacancy] = useState<VacancyProps | null>(null);
@@ -42,14 +44,14 @@ const PriorityScreen = () => {
     return (
       <div className="isloading-screen">
         <div className="isloading-spinner"></div>
-        <p>Загрузка...</p>
+        <p>{t("loading")}</p>
       </div>
     );
   }
   if (!vacancy) {
     return (
       <div className="error-screen">
-        <p>Вакансия не найдена</p>
+        <p>{t("vacancy_not_found")}</p>
       </div>
     );
   }
@@ -59,9 +61,9 @@ const PriorityScreen = () => {
       <div className="success-screen">
         <div className="success-container">
           <div className="success-icon">✔</div>
-          <h1 className="success-title">Тест завершен!</h1>
+          <h1 className="success-title">{t("test_completed")}!</h1>
           <p className="success-message">
-            Спасибо за участие. Мы свяжемся с вами в ближайшее время.
+            {t("thanks_for_participation")}. {t("we_will_contact_you")}
           </p>
         </div>
       </div>

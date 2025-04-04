@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 type Item = {
   id: number;
@@ -15,6 +16,7 @@ const PriorityList: React.FC<Props> = ({
   setPriorityItems,
   handleSubmit,
 }) => {
+  const { t } = useTranslation();
   const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
 
   const handleDragStart = (index: number) => {
@@ -89,7 +91,7 @@ const PriorityList: React.FC<Props> = ({
           id="submitButton"
           className="submit-button"
         >
-          <span>Отправить</span>
+          <span>{t("send")}</span>
           <div id="loadingSpinner" className="loading-spinner"></div>
         </button>
       </div>

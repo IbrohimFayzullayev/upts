@@ -29,3 +29,10 @@ interface IUser {
   limit: number;
   phone: string | null;
 }
+
+interface IModalContext {
+  modal: {
+    addVacancy: boolean;
+  };
+  handleModal: ({ key, value }: { key: string; value: boolean }) => void;
+}

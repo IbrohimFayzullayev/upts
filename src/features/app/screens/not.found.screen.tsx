@@ -1,6 +1,9 @@
 // import { useNavigate } from "react-router-dom";
 
+import { useTranslation } from "react-i18next";
+
 const NotFoundScreen: React.FC = () => {
+  const { t } = useTranslation();
   //   const navigate = useNavigate();
 
   //   useEffect(() => {
@@ -13,10 +16,8 @@ const NotFoundScreen: React.FC = () => {
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.title}>404 - Страница не найдена</h1>
-      <p style={styles.message}>
-        Страница, которую вы ищете, не существует или была перемещена.
-      </p>
+      <h1 style={styles.title}>404 - {t("page_not_found")}</h1>
+      <p style={styles.message}>{t("page_not_found_message")}</p>
       {/* <button style={styles.button} onClick={handleGoHome}>
         Перейти на главную
       </button> */}
