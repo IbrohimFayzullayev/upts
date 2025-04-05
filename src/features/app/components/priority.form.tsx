@@ -20,20 +20,26 @@ const PriorityForm: React.FC<Props> = ({ vacancyId, setIsPriority }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await Axios.get<{ result: Item[] }>(
+        const response = await Axios.get<{ result: Item[] }>(
           `/test/motivation/?vacancy_id=${vacancyId}`
-        ).then((res) => setPriorityItems(res.data.result));
-      } catch (error) {}
+        );
+        setPriorityItems(response.data.result);
+      } catch (error) {
+        // Handle error (optional)
+      }
     };
     fetchData();
-  }, []);
+  }, [vacancyId]);
 
   const handleSubmit = () => setIsPriority(false);
 
   return (
-    <form id="priorityForm">
-      <h2>{t("what_important")}</h2>
-      <p className="instructions">{t("priority_instructions")}</p>
+    <form id="priorityForm" className="space-y-6">
+      <h2 className="text-[24px] mb-2 font-semibold text-gray-800">
+        {t("what_important")}
+      </h2>
+      <p className="text-[18px] text-gray-500">{t("priority_instructions")}</p>
+
       <PrList
         handleSubmit={handleSubmit}
         priorityItems={priorityItems}

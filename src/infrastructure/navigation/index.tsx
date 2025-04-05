@@ -6,6 +6,7 @@ import NotFoundScreen from "../../features/app/screens/not.found.screen";
 import { ReactNode, useContext } from "react";
 import HomeScreen from "../../features/app/screens/home.screen";
 import DashboardScreen from "../../features/app/screens/dashboard.screen";
+import VacancyScreen from "../../features/app/screens/vacancy.screen";
 
 const AuthWrapper = ({ children }: { children: ReactNode }) => {
   const { isAuthenticated, isLoading } = useContext(AuthenticationContext);
@@ -29,6 +30,14 @@ const Navigation = () => {
         element={
           <AuthWrapper>
             <HomeScreen />
+          </AuthWrapper>
+        }
+      />
+      <Route
+        path="/vacancy/:id"
+        element={
+          <AuthWrapper>
+            <VacancyScreen />
           </AuthWrapper>
         }
       />

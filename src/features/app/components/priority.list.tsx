@@ -11,6 +11,7 @@ type Props = {
   setPriorityItems: React.Dispatch<React.SetStateAction<Item[]>>;
   handleSubmit: () => void;
 };
+
 const PriorityList: React.FC<Props> = ({
   priorityItems,
   setPriorityItems,
@@ -18,6 +19,7 @@ const PriorityList: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation();
   const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   const handleDragStart = (index: number) => {
     setDraggingIndex(index);
@@ -47,54 +49,64 @@ const PriorityList: React.FC<Props> = ({
     setPriorityItems(updatedItems);
   };
 
+  const SelectItem = (id: number) => {
+    const updatedItems = [...priorityItems];
+    const itemIndex = updatedItems.findIndex((item) => item.id === id);
+    if (itemIndex > -1) {
+      const [selectedItem] = updatedItems.splice(itemIndex, 1);
+      updatedItems.unshift(selectedItem);
+      setPriorityItems(updatedItems);
+    }
+    if (!selectedIds.includes(id)) {
+      setSelectedIds((prev) => [...prev, id]);
+    }
+  };
+
   return (
-    <div className="priority-list" id="priorityList">
+    <div className="space-y-4">
       {priorityItems.map((item, index) => (
         <div
-          className="priority-item-container"
+          className="p-2 border bg-white border-gray-300 rounded-sm cursor-grab"
           key={item.id}
           draggable
           onDragStart={() => handleDragStart(index)}
           onDragOver={() => handleDragOver(index)}
           onDragEnd={handleDragEnd}
-          style={{
-            cursor: "grab",
-            padding: "10px",
-            border: "1px solid #ccc",
-            marginBottom: "5px",
-          }}
         >
-          <div className="priority-item">{item.name}</div>
-          <div className="arrow-buttons" style={{ display: "flex" }}>
-            <button
-              className="arrow-button arrow-up"
-              type="button"
-              onClick={() => moveItem(index, -1)}
-            >
-              ↑
-            </button>
-            <button
-              className="arrow-button arrow-down"
-              type="button"
-              onClick={() => moveItem(index, 1)}
-            >
-              ↓
-            </button>
+          <div
+            onClick={() => SelectItem(item.id)}
+            className="cursor-move flex bg-[#f8f9fa] border border-[#dee2e6] rounded-sm px-2 py-3.5 justify-between items-center hover:bg-[#e9ecef]"
+          >
+            <div className="text-gray-800">{item.name}</div>
+            {selectedIds.includes(item.id) && (
+              <div className="flex space-x-2">
+                <button
+                  className="cursor-pointer w-8 h-8 text-lg text-black bg-white border border-gray-300 rounded hover:border-blue-500 shadow-sm"
+                  type="button"
+                  onClick={() => moveItem(index, -1)}
+                >
+                  ↑
+                </button>
+                <button
+                  className="cursor-pointer w-8 h-8 text-lg text-black bg-white border border-gray-300 rounded hover:border-blue-500 shadow-sm"
+                  type="button"
+                  onClick={() => moveItem(index, 1)}
+                >
+                  ↓
+                </button>
+              </div>
+            )}
           </div>
         </div>
       ))}
 
-      <div className="submit-container">
-        <button
-          onClick={handleSubmit}
-          type="submit"
-          id="submitButton"
-          className="submit-button"
-        >
-          <span>{t("send")}</span>
-          <div id="loadingSpinner" className="loading-spinner"></div>
-        </button>
-      </div>
+      <button
+        onClick={handleSubmit}
+        type="button"
+        className="w-full cursor-pointer px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+      >
+        <span>{t("send")}</span>
+      </button>
     </div>
   );
 };

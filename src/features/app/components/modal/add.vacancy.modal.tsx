@@ -1,9 +1,8 @@
 import React, { FormEvent, useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
 import { authAxios } from "../../../../utils/axios";
 import { useTranslation } from "react-i18next";
 // import toast from "react-hot-toast";
+import { IoClose } from "react-icons/io5";
 
 type AddVacancyModalProps = {
   show: boolean;
@@ -26,8 +25,6 @@ const AddVacancyModal: React.FC<AddVacancyModalProps> = ({
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Handle form submission logic here
-    console.log("Form submitted");
     setLoading(true);
     try {
       await authAxios
@@ -50,55 +47,70 @@ const AddVacancyModal: React.FC<AddVacancyModalProps> = ({
   };
 
   return (
-    <Modal
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-      show={show}
-      onHide={onHide}
+    <div
+      className={`fixed inset-0 z-50 flex justify-center items-center bg-gray-700/50 ${
+        show ? "block" : "hidden"
+      }`}
     >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          {t("add_vacancy")}
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <form onSubmit={handleSubmit} className="mb-3">
-          <div className="form-group">
-            <label htmlFor="name_ru">{t("name_ru")}</label>
+      <div className="bg-white p-6 rounded-lg w-full max-w-lg">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-semibold">{t("add_vacancy")}</h3>
+          <button className="text-gray-500" onClick={onHide} aria-label="Close">
+            {/* &times; */}
+            <IoClose className="w-6 h-6 cursor-pointer" />
+          </button>
+        </div>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label
+              htmlFor="name_ru"
+              className="block text-sm font-medium text-gray-700"
+            >
+              {t("name_ru")}
+            </label>
             <input
               type="text"
-              className="form-control"
               id="name_ru"
               name="name_ru"
               value={nameRu}
               onChange={(e) => setNameRu(e.target.value)}
               placeholder={t("enter_name_ru")}
               required
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="name_uz">{t("name_uz")}</label>
+          <div>
+            <label
+              htmlFor="name_uz"
+              className="block text-sm font-medium text-gray-700"
+            >
+              {t("name_uz")}
+            </label>
             <input
               type="text"
-              className="form-control"
               id="name_uz"
+              name="name_uz"
               value={nameUz}
               onChange={(e) => setNameUz(e.target.value)}
-              name="name_uz"
               placeholder={t("enter_name_uz")}
               required
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="position">{t("position")}</label>
+          <div>
+            <label
+              htmlFor="position"
+              className="block text-sm font-medium text-gray-700"
+            >
+              {t("position")}
+            </label>
             <select
-              className="form-control"
               id="position"
               name="position"
               value={position}
               onChange={(e) => setPosition(e.target.value)}
               required
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="">{t("select_position")}</option>
               {positions.map((position) => (
@@ -108,16 +120,21 @@ const AddVacancyModal: React.FC<AddVacancyModalProps> = ({
               ))}
             </select>
           </div>
-          <div className="d-flex justify-content-between align-items-center">
-            <Button
-              variant="secondary"
+          <div className="flex justify-between items-center">
+            <button
               type="button"
-              className="mt-3"
               onClick={onHide}
+              className="mt-3 cursor-pointer px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
             >
               {t("cancel")}
-            </Button>
-            <Button type="submit" className="mt-3" disabled={loading}>
+            </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className={`${
+                loading ? "cursor-progress" : "cursor-pointer"
+              } px-4 py-2 mt-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400`}
+            >
               {loading ? (
                 <span
                   className="spinner-border spinner-border-sm"
@@ -127,11 +144,11 @@ const AddVacancyModal: React.FC<AddVacancyModalProps> = ({
               ) : (
                 t("add_vacancy")
               )}
-            </Button>
+            </button>
           </div>
         </form>
-      </Modal.Body>
-    </Modal>
+      </div>
+    </div>
   );
 };
 

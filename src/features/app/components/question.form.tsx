@@ -1,13 +1,13 @@
 import { FC, useEffect, useState } from "react";
 import { Axios } from "../../../utils/axios";
 import Swal from "sweetalert2";
-import "../styles/situation.styles.css";
 import { useTranslation } from "react-i18next";
 
 type Props = {
   vacancyId: string | undefined;
   handleComplete: () => void;
 };
+
 const QuestionForm: FC<Props> = ({ vacancyId, handleComplete }) => {
   const [selectedOption, setSelectedOption] =
     useState<QuestionChoiceProps | null>(null);
@@ -17,9 +17,10 @@ const QuestionForm: FC<Props> = ({ vacancyId, handleComplete }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await Axios.get<{ result: QuestionProps }>(
+        const res = await Axios.get<{ result: QuestionProps }>(
           `/test/question/initial-question/?vacancy_id=${vacancyId}`
-        ).then((res) => setQuestion(res.data.result));
+        );
+        setQuestion(res.data.result);
       } catch (error) {}
     };
     fetchData();
@@ -35,55 +36,52 @@ const QuestionForm: FC<Props> = ({ vacancyId, handleComplete }) => {
       return;
     }
     if (selectedOption.next_question === null) {
-      // Swal.fire({
-      //   icon: "success",
-      //   title: "Muvaffaqiyatli",
-      //   text: "Test tugadi!",
-      // });
       handleComplete();
       return;
     }
 
-    await Axios.get<{ result: QuestionProps }>(
+    const res = await Axios.get<{ result: QuestionProps }>(
       `/test/question/${selectedOption.next_question}/?vacancy_id=${vacancyId}`
-    ).then((res) => setQuestion(res.data.result));
+    );
+    setQuestion(res.data.result);
   };
+
   return (
-    <div className="task-container">
-      <h2 className="mb-4">{t("situation_test")}</h2>
-      {/* <div className="progress-indicator" id="progressIndicator">
-        <div className="level-dot active"></div>
-        <div className="level-dot "></div>
-        <div className="level-dot "></div>
-        <div className="level-dot "></div>
-        <div className="level-dot "></div>
-        <div className="level-dot "></div>
-      </div> */}
-      {/* <div className="level-label" id="levelLabel">
-        Boshlang'ich vaziyat (Уровень 1 из 6)
-      </div> */}
-      <div className="situation-title h4 mb-3" id="situationTitle">
+    <div className="bg-white rounded-lg p-8 mt-8 shadow-md">
+      <h2 className="text-2xl font-semibold mb-4">{t("situation_test")}</h2>
+
+      <div className="text-[1.2rem] mb-3 text-[#2c3e50] font-medium">
         {t("condition")}: {question?.text}
       </div>
-      {/* <div className="situation-text mb-4" id="situationText">
-        {question?.text}
-      </div> */}
-      <div className="options-container" id="optionsContainer">
+
+      <div className="grid grid-cols-2 gap-5 mb-8">
         {question?.choices.map((option, index) => (
           <div
             key={index}
-            className={`option ${
-              selectedOption?.id === option.id ? "selected" : ""
+            className={`relative flex flex-col h-full p-5 rounded-lg border-2 transition-all duration-300 ease-in-out cursor-pointer ${
+              selectedOption?.id === option.id
+                ? "bg-cyan-100 border-cyan-300"
+                : "bg-gray-100 border-gray-300 hover:bg-gray-200 hover:-translate-y-0.5"
             }`}
             onClick={() => setSelectedOption(option)}
           >
-            <div className="option-title">{option.text}</div>
-            {/* <div className="option-description">{option.description}</div> */}
+            {selectedOption?.id === option.id && (
+              <span className="absolute top-2 right-3 text-blue-600 text-xl font-bold">
+                ✓
+              </span>
+            )}
+            <div className="text-[#2c3e50] font-bold text-[1.1rem] mb-2">
+              {option.text}
+            </div>
           </div>
         ))}
       </div>
-      <div className="submit-container">
-        <button className="submit-btn" onClick={handleNext}>
+
+      <div className="text-center">
+        <button
+          onClick={handleNext}
+          className="cursor-pointer px-10 py-3 text-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition-colors duration-200"
+        >
           {t("continue")}
         </button>
       </div>

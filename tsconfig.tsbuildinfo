@@ -1,1 +1,22 @@
-{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/features/app/components/pr.list.tsx","./src/features/app/components/priority.form.tsx","./src/features/app/components/priority.list.tsx","./src/features/app/components/priority.register.tsx","./src/features/app/components/priority.statistics.tsx","./src/features/app/components/results.table.tsx","./src/features/app/screens/dashboard.screen.tsx","./src/features/app/screens/login.screen.tsx","./src/features/app/screens/priority.screen.tsx","./src/infrastructure/navigation/account.navigator.tsx","./src/infrastructure/navigation/app.navigator.tsx","./src/infrastructure/navigation/index.tsx","./src/services/authentication/authentication.context.tsx","./src/utils/axios.ts"],"version":"5.7.3"}
+{
+  "root": [
+    "./src/app.tsx",
+    "./src/main.tsx",
+    "./src/vite-env.d.ts",
+    "./src/features/app/components/pr.list.tsx",
+    "./src/features/app/components/priority.form.tsx",
+    "./src/features/app/components/priority.list.tsx",
+    "./src/features/app/components/priority.register.tsx",
+    "./src/features/app/components/priority.statistics.tsx",
+    "./src/features/app/components/results.table.tsx",
+    "./src/features/app/screens/dashboard.screen.tsx",
+    "./src/features/app/screens/login.screen.tsx",
+    "./src/features/app/screens/priority.screen.tsx",
+    "./src/infrastructure/navigation/account.navigator.tsx",
+    "./src/infrastructure/navigation/app.navigator.tsx",
+    "./src/infrastructure/navigation/index.tsx",
+    "./src/services/authentication/authentication.context.tsx",
+    "./src/utils/axios.ts"
+  ],
+  "version": "5.7.3"
+}

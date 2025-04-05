@@ -48,6 +48,19 @@
     "fill_form_for_register_to_test": "Заполните форму, чтобы зарегистрироваться на тест",
     "select_language_for_test": "Выберите язык для теста",
     "fio": "ФИО",
-    "phone": "Телефон"
+    "phone": "Телефон",
+    "test_link": "Ссылка на тест",
+    "copied": "Скопировано",
+    "copy_link": "Скопировать ссылку",
+    "success_login_message": "Вы успешно вошли в систему",
+    "error_login_message": "Ошибка входа. Пожалуйста, проверьте свои учетные данные и попробуйте снова.",
+    "phone_placeholder": "Введите номер телефона",
+    "fio_placeholder": "Введите ваше ФИО",
+    "vacancy_details": "Детали вакансии",
+    "vacancy_name": "Название вакансии",
+    "vacancy_id": "ID вакансии",
+    "vacancy_test_link": "Ссылка на тест вакансии",
+    "link": "Ссылка",
+    "to_back": "Назад"
   }
 }

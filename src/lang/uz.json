@@ -48,6 +48,19 @@
     "fill_form_for_register_to_test": "Testga ro'yxatdan o'tish uchun formani to'ldiring",
     "select_language_for_test": "Test uchun tilni tanlang",
     "fio": "To'liq ism",
-    "phone": "Telefon"
+    "phone": "Telefon",
+    "test_link": "Testga havola",
+    "copied": "Nusxalandi",
+    "copy_link": "Havolani nusxalash",
+    "success_login_message": "Siz muvaffaqiyatli tizimga kirdingiz",
+    "error_login_message": "Tizimga kirishda xatolik. Iltimos, hisob ma'lumotlaringizni tekshiring va qayta urinib ko'ring.",
+    "phone_placeholder": "Telefon raqamini kiriting",
+    "fio_placeholder": "To'liq ismingizni kiriting",
+    "vacancy_details": "Vakansiya tafsilotlari",
+    "vacancy_name": "Vakansiya nomi",
+    "vacancy_id": "Vakansiya ID",
+    "vacancy_test_link": "Vakansiya testiga havola",
+    "link": "Havola",
+    "to_back": "Orqaga"
   }
 }

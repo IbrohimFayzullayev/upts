@@ -3,6 +3,7 @@ import { createContext, useState, ReactNode, useEffect } from "react";
 import { authAxios, Axios } from "../../utils/axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 type AuthenticationContextType = {
   login: (username: string, password: string) => Promise<void>;
@@ -21,6 +22,7 @@ export const AuthenticationProvider = ({
   children: ReactNode;
 }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<IUser | null>(null);
@@ -65,10 +67,16 @@ export const AuthenticationProvider = ({
       });
       await fetchUser();
       navigate("/");
-      // toast.success("Вы успешно вошли в систему!");
+      toast.success(t("success_login_message"));
     } catch (error) {
       console.error(error);
-      // toast.error("Неверный логин или пароль!");
+      toast.error(`${t("error_login_message")}`, {
+        duration: 4000,
+        style: {
+          background: "#f87171",
+          color: "#fff",
+        },
+      });
     }
   };
 
