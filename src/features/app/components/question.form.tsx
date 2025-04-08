@@ -5,7 +5,11 @@ import { useTranslation } from "react-i18next";
 
 type Props = {
   vacancyId: string | undefined;
-  handleComplete: () => void;
+  handleComplete: ({
+    questionAnswers,
+  }: {
+    questionAnswers: QuestionAnswer[];
+  }) => void;
 };
 
 const QuestionForm: FC<Props> = ({ vacancyId, handleComplete }) => {
@@ -13,6 +17,7 @@ const QuestionForm: FC<Props> = ({ vacancyId, handleComplete }) => {
     useState<QuestionChoiceProps | null>(null);
   const { t } = useTranslation();
   const [question, setQuestion] = useState<QuestionProps | null>(null);
+  const [questionAnswer, setQuestionAnswer] = useState<QuestionAnswer[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,8 +40,27 @@ const QuestionForm: FC<Props> = ({ vacancyId, handleComplete }) => {
       });
       return;
     }
+    if (!question) return;
+    setQuestionAnswer((prev) => [
+      ...prev,
+      {
+        question: question.id,
+        answer: selectedOption.id,
+        number: prev.length + 1,
+      },
+    ]);
     if (selectedOption.next_question === null) {
-      handleComplete();
+      handleComplete({
+        questionAnswers: [
+          ...questionAnswer,
+          {
+            question: question.id,
+            answer: selectedOption.id,
+            number: questionAnswer.length + 1,
+          },
+        ],
+      });
+
       return;
     }
 

@@ -5,14 +5,17 @@ import { useParams } from "react-router-dom";
 import { Axios } from "../../../utils/axios";
 import QuestionForm from "../components/question.form";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
 
 const PriorityScreen = () => {
   const { t } = useTranslation();
   const { id } = useParams();
   const [isRegistered, setIsRegistered] = useState(false);
   const [vacancy, setVacancy] = useState<VacancyProps | null>(null);
+  const [priorityAnswer, setPriorityAnswer] = useState<PriorityAnswer[]>([]);
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
+
   const [isPriority, setIsPriority] = useState(true);
   const [isCompleted, setIsCompleted] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -35,8 +38,25 @@ const PriorityScreen = () => {
     setIsRegistered(true);
   };
 
-  const handleComplete = () => {
-    setIsCompleted(true);
+  const handleComplete = async ({
+    questionAnswers,
+  }: {
+    questionAnswers: QuestionAnswer[];
+  }) => {
+    try {
+      await Axios.post(`/test/result/`, {
+        full_name: fullName,
+        phone: phone,
+        vacancy_id: id,
+        motivated_orders: priorityAnswer,
+        question_orders: questionAnswers,
+      }).then(() => {
+        setIsCompleted(true);
+        toast.success(t("test_completed_successfully"));
+      });
+    } catch (error) {
+      toast.error(t("test_completed_error"));
+    }
   };
 
   if (loading) {
@@ -77,7 +97,11 @@ const PriorityScreen = () => {
       <div className="max-w-4xl mx-auto p-6">
         {isRegistered ? (
           isPriority ? (
-            <PriorityForm vacancyId={id} setIsPriority={setIsPriority} />
+            <PriorityForm
+              vacancyId={id}
+              setIsPriority={setIsPriority}
+              setPriorityAnswer={setPriorityAnswer}
+            />
           ) : (
             <QuestionForm vacancyId={id} handleComplete={handleComplete} />
           )

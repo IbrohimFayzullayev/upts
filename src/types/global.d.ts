@@ -1,14 +1,17 @@
-interface VacancyProps {
-  company: string;
+interface Position {
   id: number;
   name: string;
-  position: PositionProps;
-  vacancy_id: string;
 }
 
-interface PositionProps {
+interface VacancyProps {
+  applicant: number;
+  company: string;
+  created_at: string;
   id: number;
+  is_active: boolean;
   name: string;
+  position: Position;
+  vacancy_id: string;
 }
 
 interface QuestionProps {
@@ -36,3 +39,36 @@ interface IModalContext {
   };
   handleModal: ({ key, value }: { key: string; value: boolean }) => void;
 }
+
+type PriorityItem = {
+  id: number;
+  name: string;
+};
+
+type PriorityAnswer = {
+  motivation: number;
+  priority: number;
+};
+
+type QuestionAnswer = {
+  question: number;
+  answer: number;
+  number: number;
+};
+
+type TestAnswerProps = {
+  created_at: string;
+  id: number;
+  full_name: string;
+  phone: string;
+  motivated_orders: {
+    motivation: PriorityItem;
+    priority: number;
+  }[];
+  question_orders: {
+    answer: QuestionChoiceProps;
+    number: number;
+    question: QuestionProps;
+  };
+  vacancy: VacancyProps;
+};
