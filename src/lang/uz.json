@@ -61,6 +61,8 @@
     "vacancy_id": "Vakansiya ID",
     "vacancy_test_link": "Vakansiya testiga havola",
     "link": "Havola",
-    "to_back": "Orqaga"
+    "to_back": "Orqaga",
+    "test_completed_successfully": "Test muvaffaqiyatli yakunlandi",
+    "test_completed_error": "Testni yakunlashda xatolik"
   }
 }

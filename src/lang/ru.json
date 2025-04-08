@@ -61,6 +61,8 @@
     "vacancy_id": "ID вакансии",
     "vacancy_test_link": "Ссылка на тест вакансии",
     "link": "Ссылка",
-    "to_back": "Назад"
+    "to_back": "Назад",
+    "test_completed_successfully": "Тест успешно завершен",
+    "test_completed_error": "Ошибка завершения теста"
   }
 }

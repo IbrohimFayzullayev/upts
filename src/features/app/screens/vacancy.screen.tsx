@@ -3,11 +3,20 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { authAxios } from "../../../utils/axios";
 import { useTranslation } from "react-i18next";
 import CopyUrlButton from "../components/atoms/copy.url.button";
+import ResultsTable from "../components/results.table";
+
+type DataProps = {
+  count: number;
+  total_pages: number;
+  current: number;
+  results: TestAnswerProps[];
+};
 
 const VacancyScreen = () => {
   const { id } = useParams();
   const { t } = useTranslation();
-  const [data, setData] = useState<VacancyProps | null>(null);
+  const [vacancy, setVacancy] = useState<VacancyProps | null>(null);
+  const [data, setData] = useState<DataProps | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -16,6 +25,11 @@ const VacancyScreen = () => {
       try {
         await authAxios
           .get<{ result: VacancyProps }>(`/test/vacancy/${id}/get`)
+          .then((res) => setVacancy(res.data.result));
+      } catch (error) {}
+      try {
+        await authAxios
+          .get<{ result: DataProps }>(`/test/result/?vacancy_id=${id}`)
           .then((res) => setData(res.data.result));
       } catch (error) {}
       setLoading(false);
@@ -32,7 +46,7 @@ const VacancyScreen = () => {
     );
   }
 
-  if (!data) {
+  if (!vacancy) {
     return (
       <div className="flex justify-center items-center h-screen bg-gray-100">
         <p className="text-lg">{t("vacancy_not_found")}</p>
@@ -42,7 +56,7 @@ const VacancyScreen = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-4xl mx-auto p-6">
+      <div className="max-w-[1400px] mx-auto p-6">
         <div className="flex items-center justify-between mb-3">
           <h1 className="text-3xl font-bold mb-4">{t("vacancy_details")}</h1>
           <button
@@ -58,27 +72,29 @@ const VacancyScreen = () => {
             {t("vacancy_id")}: {id}
           </h2>
           <p className="text-gray-700 mb-2">
-            {t("company")}: {data?.company}
+            {t("company")}: {vacancy?.company}
           </p>
           <p className="text-gray-700 mb-2">
-            {t("position")}: {data?.position.name}
+            {t("position")}: {vacancy?.position.name}
           </p>
           <p className="text-gray-700 mb-2">
-            {t("vacancy_name")}: {data.name}
+            {t("vacancy_name")}: {vacancy.name}
           </p>
           <p className="text-gray-700 mb-2 flex gap-3 align-center">
             <Link
-              to={`/priority/${data.vacancy_id}`}
+              to={`/priority/${vacancy.vacancy_id}`}
               className="text-blue-600 hover:underline"
               target="_blank"
             >
               {t("vacancy_test_link")}:
             </Link>
             <CopyUrlButton
-              url={`${window.location.origin}/priority/${data?.vacancy_id}`}
+              url={`${window.location.origin}/priority/${vacancy?.vacancy_id}`}
             />
           </p>
         </div>
+
+        <ResultsTable results={data?.results || []} />
       </div>
     </div>
   );

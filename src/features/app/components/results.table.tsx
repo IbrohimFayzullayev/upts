@@ -1,56 +1,65 @@
 import React from "react";
+import { formattedTime } from "../../../utils/funcs";
 
-const ResultsTable = () => {
+type Props = {
+  results: TestAnswerProps[];
+};
+
+const ResultsTable: React.FC<Props> = ({ results }) => {
   return (
-    <div className="row">
-      <div className="col-12">
-        <div className="table-responsive">
-          <table className="table table-striped table-bordered">
-            <thead className="table-dark">
+    <div className="w-full mt-4 mb-4 rounded-lg shadow-md">
+      <div className="overflow-x-auto rounded-md shadow">
+        <table className="min-w-full divide-y divide-gray-200 bg-white">
+          <thead className="bg-gray-800 text-white text-left text-sm">
+            <tr>
+              <th className="px-4 py-2">ID</th>
+              <th className="px-4 py-2">To'liq Ism</th>
+              <th className="px-4 py-2">Telefon</th>
+              <th className="px-4 py-2">Yuborilgan Vaqt</th>
+              <th className="px-4 py-2">Top 3 Ustuvorliklar</th>
+              <th className="px-4 py-2">Natija</th>
+              <th className="px-4 py-2">Amallar</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100 text-sm">
+            {results.map((result) => (
               <tr>
-                <th>ID</th>
-                <th>To'liq Ism</th>
-                <th>Telefon</th>
-                <th>Yuborilgan Vaqt</th>
-                <th>Top 3 Ustuvorliklar</th>
-                <th>Natija</th>
-                <th>Amallar</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>83</td>
-                <td>Хусниддин Имамалиев Гафуржанович</td>
-                <td>+998971310555</td>
-                <td>2025-03-10 08:14</td>
-                <td>
-                  1. Katta barqaror kompaniyada ishlash
-                  <br />
-                  2. Ishni bajarishda va qaror qabul qilishda erkinlik
-                  <br />
-                  3. Kompaniya imidji
+                <td className="px-4 py-2">{result.id}</td>
+                <td className="px-4 py-2">{result.full_name}</td>
+                <td className="px-4 py-2">{result.phone}</td>
+                <td className="px-4 py-2">
+                  {formattedTime(result.created_at)}
                 </td>
-                <td>
-                  <span className="text-warning fw-bold">79%</span>
+                <td className="px-4 py-2">
+                  {result.motivated_orders.slice(0, 3).map((item, index) => (
+                    <div key={index}>
+                      {index + 1}. {item.motivation.name}
+                    </div>
+                  ))}
                 </td>
-                <td>
+                <td className="px-4 py-2">
+                  <span className="text-yellow-500 font-semibold">
+                    {Math.round(Math.random() * 100)}%
+                  </span>
+                </td>
+                <td className="px-4 py-2 space-x-2 space-y-2">
                   <button
-                    className="btn btn-primary btn-sm view-priorities me-2 mb-2"
+                    className="bg-blue-600 cursor-pointer text-white text-xs px-3 py-1 rounded hover:bg-blue-700 transition"
                     data-user-id="83"
                   >
                     Batafsil
                   </button>
                   <button
-                    className="btn btn-danger btn-sm delete-entry"
+                    className="bg-red-600 cursor-pointer text-white text-xs px-3 py-1 rounded hover:bg-red-700 transition"
                     data-user-id="83"
                   >
                     O'chirish
                   </button>
                 </td>
               </tr>
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

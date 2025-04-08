@@ -3,24 +3,24 @@ import PrList from "./priority.list";
 import { Axios } from "../../../utils/axios";
 import { useTranslation } from "react-i18next";
 
-type Item = {
-  id: number;
-  name: string;
-};
-
 type Props = {
   vacancyId: string | undefined;
   setIsPriority: React.Dispatch<React.SetStateAction<boolean>>;
+  setPriorityAnswer: React.Dispatch<React.SetStateAction<PriorityAnswer[]>>;
 };
 
-const PriorityForm: React.FC<Props> = ({ vacancyId, setIsPriority }) => {
-  const [priorityItems, setPriorityItems] = useState<Item[]>([]);
+const PriorityForm: React.FC<Props> = ({
+  vacancyId,
+  setIsPriority,
+  setPriorityAnswer,
+}) => {
   const { t } = useTranslation();
+  const [priorityItems, setPriorityItems] = useState<PriorityItem[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await Axios.get<{ result: Item[] }>(
+        const response = await Axios.get<{ result: PriorityItem[] }>(
           `/test/motivation/?vacancy_id=${vacancyId}`
         );
         setPriorityItems(response.data.result);
@@ -31,7 +31,15 @@ const PriorityForm: React.FC<Props> = ({ vacancyId, setIsPriority }) => {
     fetchData();
   }, [vacancyId]);
 
-  const handleSubmit = () => setIsPriority(false);
+  const handleSubmit = () => {
+    setPriorityAnswer(
+      priorityItems.map((item, index) => ({
+        motivation: item.id,
+        priority: index + 1,
+      }))
+    );
+    setIsPriority(false);
+  };
 
   return (
     <form id="priorityForm" className="space-y-6">
