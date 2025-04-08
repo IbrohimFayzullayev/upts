@@ -12,7 +12,7 @@ const HomeScreen = () => {
   const { t, i18n } = useTranslation();
   const [modalShow, setModalShow] = useState(false);
   const [vacancies, setVacancies] = useState<VacancyProps[]>([]);
-  const [attributes, setAttributes] = useState<PositionProps[]>([]);
+  const [attributes, setAttributes] = useState<Position[]>([]);
   const [lang, setLang] = useState<string>(
     localStorage.getItem("language") || "uz"
   );
@@ -34,7 +34,7 @@ const HomeScreen = () => {
         setVacancies(vacancyRes.data.result);
       } catch (error) {}
       try {
-        const attrRes = await authAxios.get<{ result: PositionProps[] }>(
+        const attrRes = await authAxios.get<{ result: Position[] }>(
           `/test/vacancy/attributes/`
         );
         setAttributes(attrRes.data.result);

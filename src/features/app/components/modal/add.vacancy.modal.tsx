@@ -7,7 +7,7 @@ import { IoClose } from "react-icons/io5";
 type AddVacancyModalProps = {
   show: boolean;
   onHide: () => void;
-  positions: PositionProps[];
+  positions: Position[];
   setVacancies: React.Dispatch<React.SetStateAction<VacancyProps[]>>;
 };
 
