@@ -1,5 +1,6 @@
 import React from "react";
 import { formattedTime } from "../../../utils/funcs";
+import { Link } from "react-router-dom";
 
 type Props = {
   results: TestAnswerProps[];
@@ -43,12 +44,13 @@ const ResultsTable: React.FC<Props> = ({ results }) => {
                   </span>
                 </td>
                 <td className="px-4 py-2 space-x-2 space-y-2">
-                  <button
+                  <Link
+                    to={`/result/${result.id}`}
                     className="bg-blue-600 cursor-pointer text-white text-xs px-3 py-1 rounded hover:bg-blue-700 transition"
                     data-user-id="83"
                   >
                     Batafsil
-                  </button>
+                  </Link>
                   <button
                     className="bg-red-600 cursor-pointer text-white text-xs px-3 py-1 rounded hover:bg-red-700 transition"
                     data-user-id="83"

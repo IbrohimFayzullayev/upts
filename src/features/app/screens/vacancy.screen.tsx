@@ -29,8 +29,8 @@ const VacancyScreen = () => {
       } catch (error) {}
       try {
         await authAxios
-          .get<{ result: DataProps }>(`/test/result/?vacancy_id=${id}`)
-          .then((res) => setData(res.data.result));
+          .get<DataProps>(`/test/result/?vacancy_id=${id}`)
+          .then((res) => setData(res.data));
       } catch (error) {}
       setLoading(false);
     };

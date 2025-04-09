@@ -50,16 +50,30 @@ const PriorityList: React.FC<Props> = ({
   };
 
   const SelectItem = (id: number) => {
+    // Agar allaqachon tanlangan bo‘lsa, hech narsa qilmaymiz
+    if (selectedIds.includes(id)) return;
+
     const updatedItems = [...priorityItems];
     const itemIndex = updatedItems.findIndex((item) => item.id === id);
-    if (itemIndex > -1) {
-      const [selectedItem] = updatedItems.splice(itemIndex, 1);
-      updatedItems.unshift(selectedItem);
-      setPriorityItems(updatedItems);
+    if (itemIndex === -1) return;
+
+    const [selectedItem] = updatedItems.splice(itemIndex, 1);
+
+    // Tanlanganlar ro'yxatiga yangi ID qo‘shamiz
+    const updatedSelectedIds = [...selectedIds, id];
+
+    // Tanlanganlar ID'lari asosida qaysi indeksga joylashtirishni bilamiz:
+    const insertIndex = updatedSelectedIds.length - 1;
+
+    // Tanlanganlar soni yetarli bo‘lsa, oxirgi tanlanganning pastiga qo‘yamiz
+    if (insertIndex >= updatedItems.length) {
+      updatedItems.push(selectedItem);
+    } else {
+      updatedItems.splice(insertIndex, 0, selectedItem);
     }
-    if (!selectedIds.includes(id)) {
-      setSelectedIds((prev) => [...prev, id]);
-    }
+
+    setSelectedIds(updatedSelectedIds);
+    setPriorityItems(updatedItems);
   };
 
   return (
