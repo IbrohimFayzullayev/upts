@@ -28,10 +28,10 @@ const HomeScreen = () => {
     authAxios.defaults.headers.common["Accept-Language"] = lang;
     const fetchData = async () => {
       try {
-        const vacancyRes = await authAxios.get<{ result: VacancyProps[] }>(
+        const vacancyRes = await authAxios.get<{ results: VacancyProps[] }>(
           `/test/vacancy/`
         );
-        setVacancies(vacancyRes.data.result);
+        setVacancies(vacancyRes.data.results);
       } catch (error) {}
       try {
         const attrRes = await authAxios.get<{ result: Position[] }>(
@@ -92,7 +92,7 @@ const HomeScreen = () => {
         />
 
         <div className="space-y-4">
-          {vacancies.map((vacancy) => (
+          {vacancies?.map((vacancy) => (
             <div key={vacancy.id} className="bg-white shadow rounded p-4">
               <div className="flex justify-between items-start">
                 <div>
