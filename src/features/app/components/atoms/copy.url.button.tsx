@@ -23,7 +23,7 @@ const CopyUrlButton: FC<Props> = ({ url }) => {
   return (
     <button
       onClick={() => handleCopyClick(url)}
-      className="cursor-pointer text-gray-500 hover:text-gray-700 flex items-center gap-1"
+      className="cursor-pointer text-gray-600 hover:text-gray-800 flex items-center gap-1"
     >
       {copied ? (
         <>

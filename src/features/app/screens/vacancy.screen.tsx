@@ -14,13 +14,24 @@ type DataProps = {
 
 const VacancyScreen = () => {
   const { id } = useParams();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [vacancy, setVacancy] = useState<VacancyProps | null>(null);
   const [data, setData] = useState<DataProps | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [lang, setLang] = useState<string>(
+    localStorage.getItem("language") || "uz"
+  );
+
+  const changeLanguage = (lang: string) => {
+    setLang(lang);
+    i18n.changeLanguage(lang);
+    authAxios.defaults.headers.common["Accept-Language"] = lang;
+    localStorage.setItem("language", lang);
+  };
 
   useEffect(() => {
+    authAxios.defaults.headers.common["Accept-Language"] = lang;
     const fetchVacancy = async () => {
       try {
         await authAxios
@@ -35,7 +46,7 @@ const VacancyScreen = () => {
       setLoading(false);
     };
     fetchVacancy();
-  }, [id]);
+  }, [id, lang]);
 
   if (loading) {
     return (
@@ -58,29 +69,52 @@ const VacancyScreen = () => {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-[1400px] mx-auto p-6">
         <div className="flex items-center justify-between mb-3">
+          {/* <div></div> */}
           <h1 className="text-3xl font-bold mb-4">{t("vacancy_details")}</h1>
-          <button
-            onClick={() => navigate(-1)}
-            className="cursor-pointer px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
-            title={t("to_back")}
-          >
-            {t("to_back")}
-          </button>
+          <div className="flex gap-4 items-center">
+            <div className="flex gap-1">
+              <button
+                onClick={() => changeLanguage("ru")}
+                className={`px-4 py-2 rounded cursor-pointer ${
+                  lang === "ru"
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-200 text-gray-800"
+                }`}
+              >
+                Ру
+              </button>
+              <button
+                onClick={() => changeLanguage("uz")}
+                className={`px-4 py-2 rounded cursor-pointer ${
+                  lang === "uz"
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-200 text-gray-800"
+                }`}
+              >
+                Uz
+              </button>
+            </div>
+
+            <button
+              onClick={() => navigate(-1)}
+              className="cursor-pointer px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
+              title={t("to_back")}
+            >
+              {t("to_back")}
+            </button>
+          </div>
         </div>
         <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-xl font-semibold mb-2">
-            {t("vacancy_id")}: {id}
+          <h2 className="text-xl text-gray-800 mb-2">
+            <b>{t("vacancy_name")}</b>: {vacancy.name}
           </h2>
-          <p className="text-gray-700 mb-2">
-            {t("company")}: {vacancy?.company}
+          <p className="text-gray-800 mb-2">
+            <b>{t("company")}</b>: {vacancy?.company}
           </p>
-          <p className="text-gray-700 mb-2">
-            {t("position")}: {vacancy?.position.name}
+          <p className="text-gray-800 mb-2">
+            <b>{t("position")}</b>: {vacancy?.position.name}
           </p>
-          <p className="text-gray-700 mb-2">
-            {t("vacancy_name")}: {vacancy.name}
-          </p>
-          <p className="text-gray-700 mb-2 flex gap-3 align-center">
+          <p className="text-gray-800 mb-2 flex gap-3 align-center">
             <Link
               to={`/priority/${vacancy.vacancy_id}`}
               className="text-blue-600 hover:underline"
