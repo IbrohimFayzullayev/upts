@@ -84,6 +84,12 @@
     "applicant": "Кандидат",
     "applicants": "Кандидаты",
     "vacancy_count": "Количество вакансий",
-    "limit_test": "Лимит тестов"
+    "limit_test": "Лимит тестов",
+    "id": "ID",
+    "sended_time": "Отправлено",
+    "top_3_priorities": "Топ 3 приоритета",
+    "result": "Результат",
+    "actions": "Действия",
+    "detail": "Детали"
   }
 }

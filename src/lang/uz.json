@@ -84,6 +84,12 @@
     "applicant": "Arizachi",
     "applicants": "Arizachilar",
     "vacancy_count": "Vakansiya soni",
-    "limit_test": "Testlar limiti"
+    "limit_test": "Testlar limiti",
+    "id": "ID",
+    "sended_time": "Yuborilgan vaqt",
+    "top_3_priorities": "Top 3 Ustuvorliklar",
+    "result": "Natija",
+    "actions": "Amallar",
+    "detail": "Batafsil"
   }
 }
