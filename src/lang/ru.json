@@ -63,6 +63,27 @@
     "link": "Ссылка",
     "to_back": "Назад",
     "test_completed_successfully": "Тест успешно завершен",
-    "test_completed_error": "Ошибка завершения теста"
+    "test_completed_error": "Ошибка завершения теста",
+    "result_not_found": "Результат не найден",
+    "test_result": "Результат теста",
+    "applicant_info": "Информация о кандидате",
+    "vacancy_info": "Информация о вакансии",
+    "motivated_orders": "Мотивированные",
+    "is_active": "Активен",
+    "yes": "Да",
+    "no": "Нет",
+    "motivation": "Мотивация",
+    "priority": "Приоритет",
+    "question_orders": "Вопросы",
+    "question": "Вопрос",
+    "question_number": "Номер вопроса",
+    "question_text": "Текст вопроса",
+    "answer": "Ответ",
+    "full_name": "ФИО",
+    "created_at": "Дата создания",
+    "applicant": "Кандидат",
+    "applicants": "Кандидаты",
+    "vacancy_count": "Количество вакансий",
+    "limit_test": "Лимит тестов"
   }
 }

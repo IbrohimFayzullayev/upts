@@ -63,6 +63,27 @@
     "link": "Havola",
     "to_back": "Orqaga",
     "test_completed_successfully": "Test muvaffaqiyatli yakunlandi",
-    "test_completed_error": "Testni yakunlashda xatolik"
+    "test_completed_error": "Testni yakunlashda xatolik",
+    "result_not_found": "Natija topilmadi",
+    "test_result": "Test natijasi",
+    "applicant_info": "Arizachining ma'lumotlari",
+    "vacancy_info": "Vakansiya ma'lumotlari",
+    "motivated_orders": "Motivatsiya",
+    "is_active": "Faol",
+    "yes": "Ha",
+    "no": "Yo'q",
+    "motivation": "Motivatsiya",
+    "priority": "Ustunlik",
+    "question_orders": "Savollar",
+    "question": "Savol",
+    "question_number": "Savol raqami",
+    "question_text": "Savol matni",
+    "answer": "Javob",
+    "full_name": "To'liq ism",
+    "created_at": "Yaratilgan sana",
+    "applicant": "Arizachi",
+    "applicants": "Arizachilar",
+    "vacancy_count": "Vakansiya soni",
+    "limit_test": "Testlar limiti"
   }
 }

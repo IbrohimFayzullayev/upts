@@ -52,7 +52,7 @@ const ResultsTable: React.FC<Props> = ({ results }) => {
                     Batafsil
                   </Link>
                   <button
-                    className="bg-red-600 cursor-pointer text-white text-xs px-3 py-1 rounded hover:bg-red-700 transition"
+                    className="bg-red-600 cursor-pointer text-white mt-2 text-xs px-3 py-1 rounded hover:bg-red-700 transition"
                     data-user-id="83"
                   >
                     O'chirish

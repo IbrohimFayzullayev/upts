@@ -74,7 +74,7 @@ const HomeScreen = () => {
           </div>
         </div>
 
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex justify-between items-center 2-4">
           <h4 className="text-xl font-medium">{t("vacancies")}</h4>
           <button
             onClick={() => setModalShow(true)}
@@ -82,6 +82,14 @@ const HomeScreen = () => {
           >
             {t("add_vacancy")}
           </button>
+        </div>
+        <div className="mb-4">
+          <p className="text-gray-800 text-base">
+            {t("limit_test")}: {user?.limit}
+          </p>
+          <p className="text-gray-800 text-base">
+            {t("vacancy_count")}: {vacancies.length}
+          </p>
         </div>
 
         <AddVacancyModal
@@ -102,6 +110,10 @@ const HomeScreen = () => {
                   <p className="text-gray-600">
                     {t("position")}: {vacancy.position.name}
                   </p>
+                  <p className="text-gray-600">
+                    {t("applicants")}: {vacancy.applicant}
+                  </p>
+
                   <div className="flex gap-3 align-center mt-2">
                     <Link
                       to={`/priority/${vacancy.vacancy_id}`}

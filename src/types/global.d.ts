@@ -69,6 +69,6 @@ type TestAnswerProps = {
     answer: QuestionChoiceProps;
     number: number;
     question: QuestionProps;
-  };
+  }[];
   vacancy: VacancyProps;
 };
