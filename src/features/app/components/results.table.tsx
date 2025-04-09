@@ -20,7 +20,7 @@ const ResultsTable: React.FC<Props> = ({ results }) => {
               <th className="px-4 py-2">{t("phone")}</th>
               <th className="px-4 py-2">{t("sended_time")}</th>
               <th className="px-4 py-2">{t("top_3_priorities")}</th>
-              <th className="px-4 py-2">{t("result")}</th>
+              {/* <th className="px-4 py-2">{t("result")}</th> */}
               <th className="px-4 py-2">{t("actions")}</th>
             </tr>
           </thead>
@@ -40,11 +40,11 @@ const ResultsTable: React.FC<Props> = ({ results }) => {
                     </div>
                   ))}
                 </td>
-                <td className="px-4 py-2">
+                {/* <td className="px-4 py-2">
                   <span className="text-yellow-500 font-semibold">
                     {Math.round(Math.random() * 100)}%
                   </span>
-                </td>
+                </td> */}
                 <td className="px-4 py-2 space-x-2 space-y-2">
                   <Link
                     to={`/result/${result.id}`}
@@ -53,12 +53,12 @@ const ResultsTable: React.FC<Props> = ({ results }) => {
                   >
                     {t("detail")}
                   </Link>
-                  <button
+                  {/* <button
                     className="bg-red-600 cursor-pointer text-white mt-2 text-xs px-3 py-1 rounded hover:bg-red-700 transition"
                     data-user-id="83"
                   >
                     {t("delete")}
-                  </button>
+                  </button> */}
                 </td>
               </tr>
             ))}

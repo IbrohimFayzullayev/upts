@@ -170,9 +170,9 @@ const ResultScreen = () => {
           <ul className="list-decimal pl-5 space-y-2 text-gray-700">
             {result.motivated_orders.map((order, index) => (
               <li key={index}>
-                <span className="font-medium text-gray-900">
+                {/* <span className="font-medium text-gray-900">
                   {t("motivation")}:
-                </span>{" "}
+                </span>{" "} */}
                 {order.motivation.name}
               </li>
             ))}
