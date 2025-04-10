@@ -71,18 +71,18 @@ const QuestionForm: FC<Props> = ({ vacancyId, handleComplete }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg p-8 mt-8 shadow-md">
+    <div className="bg-white rounded-lg p-4 mt-4 md:p-8 md:mt-4  shadow-md">
       <h2 className="text-2xl font-semibold mb-4">{t("situation_test")}</h2>
 
-      <div className="text-[1.2rem] mb-3 text-[#2c3e50] font-medium">
+      <div className="text-[1.1rem] md:text-[1.2rem] mb-3 text-[#2c3e50] font-medium">
         {t("condition")}: {question?.text}
       </div>
 
-      <div className="grid grid-cols-2 gap-5 mb-8">
+      <div className="grid grid-cols-1 gap-5 mb-8 md:grid-cols-2">
         {question?.choices.map((option, index) => (
           <div
             key={index}
-            className={`relative flex flex-col h-full p-5 rounded-lg border-2 transition-all duration-300 ease-in-out cursor-pointer ${
+            className={`relative flex flex-col h-full p-3 md:p-5 rounded-lg border-2 transition-all duration-300 ease-in-out cursor-pointer ${
               selectedOption?.id === option.id
                 ? "bg-cyan-100 border-cyan-300"
                 : "bg-gray-100 border-gray-300 hover:bg-gray-200 hover:-translate-y-0.5"
@@ -94,7 +94,7 @@ const QuestionForm: FC<Props> = ({ vacancyId, handleComplete }) => {
                 ✓
               </span>
             )}
-            <div className="text-[#2c3e50] font-bold text-[1.1rem] mb-2">
+            <div className="text-[#2c3e50] font-bold text-[1rem] mb-2 md:text-[1.1rem]">
               {option.text}
             </div>
           </div>

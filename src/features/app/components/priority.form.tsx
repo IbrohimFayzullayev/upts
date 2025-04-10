@@ -43,10 +43,12 @@ const PriorityForm: React.FC<Props> = ({
 
   return (
     <form id="priorityForm" className="space-y-6">
-      <h2 className="text-[24px] mb-2 font-semibold text-gray-800">
+      <h2 className="text-[1.3rem] md:text-[1.5rem] mb-2 font-semibold text-gray-800">
         {t("what_important")}
       </h2>
-      <p className="text-[18px] text-gray-500">{t("priority_instructions")}</p>
+      <p className="text-[1rem] md:text-[1.2rem] text-gray-500">
+        {t("priority_instructions")}
+      </p>
 
       <PrList
         handleSubmit={handleSubmit}
