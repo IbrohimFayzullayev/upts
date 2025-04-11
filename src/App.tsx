@@ -4,6 +4,7 @@ import { AuthenticationProvider } from "./services/authentication/authentication
 import i18n from "./services/lang/i18n";
 import { I18nextProvider } from "react-i18next";
 import { Toaster } from "react-hot-toast";
+import YandexMetrika from "./scripts/yandex.metrika";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <I18nextProvider i18n={i18n}>
         <Toaster position="top-center" reverseOrder={false} />
         <AuthenticationProvider>
+          <YandexMetrika />
           <Navigation />
         </AuthenticationProvider>
       </I18nextProvider>
